@@ -2,7 +2,8 @@ import * as cdk from '@aws-cdk/core';
 import * as iam from '@aws-cdk/aws-iam';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as dynamodb from '@aws-cdk/aws-dynamodb';
-
+import * as sqs from '@aws-cdk/aws-sqs';
+import * as sns from '@aws-cdk/aws-sns';
 
 export class MyTestStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -112,6 +113,9 @@ export class MyTestStack extends cdk.Stack {
       provisionedThroughput: { readCapacityUnits: 3,writeCapacityUnits: 3 }
       
     });
+
+    const queue = new sqs.Queue(this, 'BookPrintQueue');
+    const topic = new sns.Topic(this, 'SNSTopicForUserCommunication');
      
   }
 }
