@@ -24,7 +24,18 @@ export class IamRoleCreateStack extends cdk.Stack {
       sid: 'AllowLogging',
 
     }));
-
     role.attachInlinePolicy(policy);
+
+    const policy2 = new iam.Policy(this, "ReadFromUserImagesS3Bucket");
+    policy2.addStatements(new iam.PolicyStatement({
+        resources: ['arn:aws:s3:::*'],
+        actions: ['s3:Get*',
+          's3:List*',
+        ],
+        effect: iam.Effect.ALLOW,
+    }));
+    role.attachInlinePolicy(policy2);
+
+    
   }
 }
