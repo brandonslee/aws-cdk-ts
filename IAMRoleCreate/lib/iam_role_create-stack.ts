@@ -11,7 +11,7 @@ export class IamRoleCreateStack extends cdk.Stack {
       path: "/DigitalBooks/",
     });
 
-    const policy = new iam.Policy(this, "LambdaWriteCWLogs");
+    let policy = new iam.Policy(this, "LambdaWriteCWLogs");
     policy.addStatements(new iam.PolicyStatement({
       resources: ['*'],
       actions: ['logs:CreateLogGroup',
@@ -26,15 +26,15 @@ export class IamRoleCreateStack extends cdk.Stack {
     }));
     role.attachInlinePolicy(policy);
 
-    const policy2 = new iam.Policy(this, "ReadFromUserImagesS3Bucket");
-    policy2.addStatements(new iam.PolicyStatement({
+    policy = new iam.Policy(this, "ReadFromUserImagesS3Bucket");
+    policy.addStatements(new iam.PolicyStatement({
         resources: ['arn:aws:s3:::*'],
         actions: ['s3:Get*',
           's3:List*',
         ],
         effect: iam.Effect.ALLOW,
     }));
-    role.attachInlinePolicy(policy2);
+    role.attachInlinePolicy(policy);
 
     
   }
