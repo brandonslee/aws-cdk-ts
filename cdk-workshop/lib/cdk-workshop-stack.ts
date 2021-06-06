@@ -2,6 +2,7 @@ import * as cdk from '@aws-cdk/core';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as apigw from '@aws-cdk/aws-apigateway';
 import { HitCounter } from './hitcounter';
+import { TableViewer } from 'cdk-dynamo-table-viewer';
 
 export class CdkWorkshopStack extends cdk.Stack {
   constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
@@ -23,6 +24,15 @@ export class CdkWorkshopStack extends cdk.Stack {
     new apigw.LambdaRestApi(this, 'Endpoint', {
       handler: hellowWithCounter.handler
     });
+
+    // https://www.npmjs.com/package/cdk-dynamo-table-viewer for test, not for production
+    new TableViewer(this, 'ViewHitCounter', {
+      title: 'Hello Hits',
+      table: hellowWithCounter.table,
+      sortBy: '-hits'
+
+    });
+
     
   }
 }
