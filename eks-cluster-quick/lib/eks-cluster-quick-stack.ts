@@ -19,7 +19,7 @@ export class EksClusterQuickStack extends cdk.Stack {
         containers: [
           {
             name: 'hello',
-            image: 'paulbouwer/hello-kubernetes:1.5',
+            image: 'paulbouwer/hello-kubernetes:1.10',
             ports: [ { containerPort: 8080 } ]
           }
         ]
